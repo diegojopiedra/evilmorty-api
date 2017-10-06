@@ -15,5 +15,5 @@ use Illuminate\Support\Facades\Hash;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return "Soy un despiche".view('welcome');
 });
