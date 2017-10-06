@@ -15,11 +15,5 @@ use Illuminate\Support\Facades\Hash;
 
 
 Route::get('/', function () {
-    /*$user = new User();
-    $user->name = "Diego";
-    $user->lastname = "Piedra Araya";
-    $user->email = "diegojopiedra@gmail.com";
-    $user->password = Hash::make("1234");
-    $user->save();*/
-    return User::all() . view('welcome');
+    return view('welcome');
 });
