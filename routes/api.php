@@ -20,4 +20,5 @@ use Illuminate\Http\Request;
 Route::post('logout', 'UserController@logout');
 Route::post('login', 'UserController@login');
 Route::resource('place','PlaceController', ['except' => ['create', 'edit']]);
-Route::resource('devie','DeviceController', ['except' => ['create', 'edit']]);
+Route::resource('device','DeviceController', ['except' => ['create', 'edit']]);
+Route::get('service/{id}/{data}/{mutantKey}', 'DeviceController@service');

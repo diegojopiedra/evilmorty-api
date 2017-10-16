@@ -52,10 +52,9 @@ class PlaceController extends Controller
       if($showUser){
         $place =  new Place();
         $place->name = $request->input('name');
-        $place->lat = $request->input('lat');
-        $place->lon = $request->input('lon');
         $place->description = $request->input('description');
         $showUser->places()->save($place);
+        return $place;
       }else{
         return response()->json(['error' => 'user_not_found'], 401);
       }
@@ -67,9 +66,23 @@ class PlaceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        //
+      $sessionUser = JWTAuth::toUser(JWTAuth::getToken());
+      $showUser = null;
+      if($sessionUser && $sessionUser->superUser && $request->input('userId')){
+        $showUser = User::find($request->input('userId'));
+      }else{
+        $showUser = $sessionUser;
+      }
+
+      if($showUser){
+        $place = $showUser->places->find($id);
+        $place->devices;
+        return $place;
+      }else{
+        return response()->json(['error' => 'user_not_found'], 401);
+      }
     }
 
     /**

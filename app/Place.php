@@ -8,6 +8,6 @@ class Place extends Eloquent
 {
   public function devices()
   {
-   return $this->embedsMany('App\Device');
+   return $this->hasMany('App\Device');
   }
 }

@@ -13,7 +13,7 @@ class SuperUser extends Command
      *
      * @var string
      */
-    protected $signature = 'super:create {email : The email to login in the app} {pwd : The password to login in the app} ';
+    protected $signature = 'super:create {email : The email to login in the app} {pwd : The password to login in the app} {name} {lastname}';
 
     /**
      * The console command description.
@@ -41,14 +41,16 @@ class SuperUser extends Command
     {
       $user =  new User();
       $user->email = $this->argument('email');
+      $user->name = $this->argument('name');
+      $user->lastname = $this->argument('lastname');
       $user->password = Hash::make($this->argument('pwd'));
       $user->superUser = true;
       $user->save();
       $this->info("Super User created successfully email: " . $user->email);
 
-      $headers = ['ID', 'Super User'];
+      $headers = ['ID', 'Email', 'Name', 'Lastname'];
 
-      $users = User::where('superUser', '=', true)->get(['email']);
+      $users = User::where('superUser', '=', true)->get(['email', 'name', 'lastname']);
 
       $this->table($headers, $users);
     }
