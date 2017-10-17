@@ -97,7 +97,9 @@ class DeviceController extends Controller
       }
 
       if($queryUser){
-        return Device::find($id);
+        $device = Device::find($id);
+        $device->log;
+        return $device;
       }else{
         return response()->json(['error' => 'user_not_found'], 401);
       }
@@ -134,8 +136,8 @@ class DeviceController extends Controller
         return $error;
       }else{
         if($device->mutantKey == $mutantKey){
-          $device->mutantKey = $this->RandomString(45);
-          $device->save();
+          /*$device->mutantKey = $this->RandomString(45);
+          $device->save();*/
           $log = new Log();
           foreach (json_decode($data) as $name => $value) {
             $log->$name = $value;
