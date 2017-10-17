@@ -12,12 +12,12 @@ class Device extends Eloquent
 
   public function alerts()
   {
-   return $this->embedsMany('App\Alert');
+   return $this->hasMany('App\Alert');
   }
 
   public function log()
   {
-   return $this->embedsMany('App\Log');
+   return $this->hasMany('App\Log');
   }
 
   public function place()
