@@ -98,8 +98,8 @@ class DeviceController extends Controller
 
       if($queryUser){
         $device = Device::find($id);
-        $device->log;
-        return $device;
+        $log = Log::where('device_id', $device->id)->paginate(3);
+        return ['device' => $device, 'log' => $log];
       }else{
         return response()->json(['error' => 'user_not_found'], 401);
       }
@@ -136,8 +136,8 @@ class DeviceController extends Controller
         return $error;
       }else{
         if($device->mutantKey == $mutantKey){
-          /*$device->mutantKey = $this->RandomString(45);
-          $device->save();*/
+          $device->mutantKey = $this->RandomString(45);
+          $device->save();
           $log = new Log();
           foreach (json_decode($data) as $name => $value) {
             $log->$name = $value;
@@ -148,6 +148,17 @@ class DeviceController extends Controller
           return $error;
         }
       }
+    }
+
+    public function cryptExample($method = 'aes-128-cbc', Request $request)
+    {
+      $response = [
+        'encryptedData' => $request->input('encryptedData'),
+        'key' => $request->input('key'),
+        'method' => $method,
+        'decryptedData' => openssl_decrypt ($request->input('encryptedData'), $method, $request->input('key'))
+      ];
+      return $response;
     }
 
     private function RandomString($length = 10)

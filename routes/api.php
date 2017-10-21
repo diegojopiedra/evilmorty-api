@@ -22,3 +22,4 @@ Route::post('login', 'UserController@login');
 Route::resource('place','PlaceController', ['except' => ['create', 'edit']]);
 Route::resource('device','DeviceController', ['except' => ['create', 'edit']]);
 Route::get('service/{id}/{data}/{mutantKey}', 'DeviceController@service');
+Route::get('cryptExample/{method?}', 'DeviceController@cryptExample');
